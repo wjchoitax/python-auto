@@ -2,20 +2,51 @@ import os
 import glob
 import shutil
 
-# 정리할 디텍토리 생성
-# c:/my-job/scans 생성
 
-print(os.getcwd())
-os.mkdir()
+def make_dir_for_arrange():
+    if not os.path.exists('c:\\my-job'):
+        os.mkdir('c:\\my-job')
+    if not os.path.exists('c:\\my-job\\scans'):
+        os.mkdir('c:\\my-job\\scans')
+    os.chdir('c:\\my-job\\scans')
+    # c:/my-job/scans/1 ~ 20 까지 디렉토리 20개를 만든다.
+    for dir_name in range(1, 21):
+        try:
+            os.mkdir(str(dir_name))  # for 문 사용
+        except:
+            pass
 
-# c:/my-job/scans/01 ~ 20 까지 디렉토리 20개를 만든다.
-os.mkdir()  # for 문 사용
 
-# cwd 를 c:/work-for-python(스캔원본이 있는 디렉토리)로 이동
-os.chdir()
+def check_for_work_and_get_files():
+    os.chdir('c:\\work-for-python')
+    return glob.glob('*.pdf')
 
-glob.glob('*.pdf')
 
-# 0000~00010 파일은 01 디렉토리에 복사 후 삭제
-# 00011~00020 파일은 02 디렉토리에 복사 후 삭제
-# 위 작업을 20번 반복
+def arrange_scanfiles(files):
+    for file in files:
+        the_number = int(file.split('-')[1])
+        if the_number <= 10:
+            shutil.copy(file, 'c:\\my-job\\scans\\1')
+        elif the_number <= 20:
+            shutil.copy(file, 'c:\\my-job\\scans\\2')
+        elif the_number <= 30:
+            shutil.copy(file, 'c:\\my-job\\scans\\3')
+        elif the_number <= 40:
+            shutil.copy(file, 'c:\\my-job\\scans\\4')
+        else:
+            shutil.copy(file, 'c:\\my-job\\scans\\5')
+
+
+def main():
+    make_dir_for_arrange()
+    files = check_for_work_and_get_files()
+
+    if not len(files) == 0:
+        arrange_scanfiles(files)
+    else:
+        print('정리할 파일이 없습니다.')
+
+    print('job completed..')
+
+
+main()
