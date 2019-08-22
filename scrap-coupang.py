@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
@@ -28,6 +29,10 @@ for li_tag in soup.select('#productList > li'):
         'http:' + li_tag.select_one('a > dl > dt > img')['src']
     ])
 
-print(product_list)
 # 3. 엑셀로 저장한다.
 # pandas 를 사용해서 엑셀로 저장한다. 코드는 단 세줄정도..
+df = pd.DataFrame(product_list)
+df.columns = ['상품명', '가격', '좋아요', '이미지 URL']
+df.to_excel('쿠팡리스트.xlsx', index=False)
+print('save ok..')
+
