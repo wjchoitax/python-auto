@@ -7,7 +7,7 @@ SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 # 보내는 메일 계정
 SMTP_USER = 'soongon'
-SMTP_PASSWORD = 'tnsrhsl30'
+SMTP_PASSWORD = ''
 
 
 # 이메일 유효성 검사 함수
